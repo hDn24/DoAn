@@ -3,15 +3,16 @@ from imutils import face_utils
 import numpy as np
 import argparse
 import imutils
-import playsound
+# import playsound
+from playsound import playsound
 import time
-from threading import Thread
+# from threading import Thread
 import dlib
-import os
+# import os
 import cv2
 
 # Cau hinh duong dan den file alarm.wav
-wav_path = "/home/pi/miai/landmark/alarm.wav"
+# wav_path = "D:\DS\DALTHT\SourceCode\alarm.wav"
 
 # Ham phat ra am thanh
 def play_sound(path):
@@ -20,7 +21,6 @@ def play_sound(path):
 # Ham tinh khoang cach giua 2 diem
 def e_dist(pA, pB):
 	return np.linalg.norm(pA - pB)
-
 def eye_ratio(eye):
 	# Tinh toan khoang cach theo chieu doc giua mi tren va mi duoi
 	d_V1 = e_dist(eye[1], eye[5])
@@ -76,8 +76,8 @@ while True:
 	for (x, y, w, h) in faces:
 
 		# Tao mot hinh chu nhat quanh khuon mat
-		rect = dlib.rectangle(int(x), int(y), int(x + w),
-			int(y + h))
+		rect = dlib.rectangle(int(x), int(y), int(x + w), int(y + h))
+		
 
 		# Nhan dien cac diem landmark
 		landmark = landmark_detect(gray, rect)
@@ -111,13 +111,15 @@ while True:
 
 
 					# Tien hanh phat am thanh trong 1 luong rieng
-					t = Thread(target=play_sound,
-							   args=(wav_path,))
-					t.deamon = True
-					t.start()
+					# t = Thread(target=play_sound,
+					# 		   args=(wav_path,))
+					# t.deamon = True
+					# t.start()
+					# Ve dong chu canh bao
+					cv2.putText(frame, "Ban buon ngu roi", (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 255), 2)
+					# playsound("D:\DS\DALTHT\SourceCode\Recording.m4a")
 
-				# Ve dong chu canh bao
-				cv2.putText(frame, "BUON NGU THI DI NGU DI ONG OI!!!", (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 255), 2)
+
 
 		# Neu khong nham mat thi
 		else:
@@ -127,16 +129,16 @@ while True:
 			alarmed = False
 
 			# Hien thi gia tri eye ratio trung binh
+			
 			cv2.putText(frame, "EYE AVG RATIO: {:.3f}".format(eye_avg_ratio), (10, 30),	cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 0, 0), 2)
 
 	# Hien thi len man hinh
 	cv2.imshow("Camera", frame)
 
 	# Bam Esc de thoat
-	key = cv2.waitKey(1) & 0xFF
-	if key == 27:
+	key = cv2.waitKey(1)
+	if key == 27 or key == ord('q') or key == ord('Q'):
 		break
-
-
+		
 cv2.destroyAllWindows()
 vs.stop()
