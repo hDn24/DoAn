@@ -13,7 +13,7 @@ import cv2
 # import RPi.GPIO as GPIO
 
 # Path file cảnh báo
-wav_path = "D:\DS\DALTHT\SourceCode\Recording.m4a"
+wav_path = "Recording.m4a"
 
 # Hàm phát âm thanh cảnh báo
 def play_sound(path):
@@ -72,7 +72,7 @@ while True:
 	gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
 	# Detect các mặt trong ảnh
-	faces = face_detect.detectMultiScale(gray, scaleFactor=1.1,		minNeighbors=5, minSize=(100, 100))
+	faces = face_detect.detectMultiScale(gray, scaleFactor=1.1, minNeighbors=5, minSize=(100, 100))
 
 	# Duyệt hết tất cả các mặt detect được
 	for (x, y, w, h) in faces:
